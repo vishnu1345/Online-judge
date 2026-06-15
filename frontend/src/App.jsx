@@ -5,6 +5,8 @@ import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoutes";
 import Dashboard from "./pages/Dashboard";
 import { AuthProvider } from "./context/AuthContext";
+import Problems from "./pages/Problems";
+import ProblemDetails from "./pages/ProblemDetails";
 
 
 export default function App() {
@@ -21,6 +23,22 @@ export default function App() {
               element={
                 <ProtectedRoute >
                   <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route 
+              path="/problems"
+              element={
+                <ProtectedRoute>
+                  <Problems />
+                </ProtectedRoute>
+              }
+            />
+            <Route 
+              path="/problems/:id"
+              element={
+                <ProtectedRoute>
+                  <ProblemDetails />
                 </ProtectedRoute>
               }
             />
