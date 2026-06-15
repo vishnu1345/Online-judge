@@ -6,14 +6,12 @@ const testCaseSchema = mongoose.Schema({
         ref:"Problem",
         required:true
     },
-    input:{
-        type: String,
-        required:true
-    },
-    output:{
-        type:String,
-        required:true
-    }
+    cases:[
+        {
+            input: String,
+            output: String
+        }
+    ]
 });
 
 module.exports = mongoose.model("TestCase" , testCaseSchema);
