@@ -1,6 +1,7 @@
 # Online-judge
 
 # Architecure
+```mermaid
 flowchart LR
 
     User --> React
@@ -29,3 +30,4 @@ flowchart LR
     Express --> React
 
     React --> User
+```
