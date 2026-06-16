@@ -1,12 +1,41 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import api from "../services/api";
+import Editor from "@monaco-editor/react";
 
 export default function ProblemDetails() {
+    const defaultCpp = `#include <iostream>
+                        using namespace std;
+
+                        int main() {
+
+                            return 0;
+                        }`;
+
   const { id } = useParams();
 
   const [problem, setProblem] = useState(null);
   const [testcase, setTestcase] = useState(null);
+  const [code , setCode] = useState(defaultCpp);
+  const [verdict , setVerdict] = useState(null);
+  const [loading , setLoading] = useState(false);
+
+  const handleSubmit = async ()=>{
+    setLoading(true);
+    try {
+        const res = await api.post(`/submit/${id}` , {
+            code , 
+            language : "cpp"
+        })
+        console.log(res);
+        setVerdict(res.data.verdict);
+
+    } catch (error) {
+        console.log(error);
+    } finally{
+        setLoading(false);
+    }
+  }
 
   useEffect(() => {
     const fetchProblem = async () => {
@@ -71,6 +100,26 @@ export default function ProblemDetails() {
           ))}
         </div>
       </div>
+
+          <Editor 
+            height="500px"
+            defaultLanguage="cpp"
+            value={code}
+            onChange={(value)=>setCode(value)}
+          />
+
+          <button onClick={handleSubmit} disabled={loading}>
+            {
+                loading ? "Judging..." : "Submit"
+            }
+          </button>
+          {
+            verdict && (
+                <div>
+                    Verdict : {verdict}
+                </div>
+            )
+          }
     </div>
   );
 }

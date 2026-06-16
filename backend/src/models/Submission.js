@@ -1,33 +1,42 @@
 const mongoose = require("mongoose");
 
-const submissionSchema = mongoose.Schema({
-    userId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref : "User",
-        required:true,
+const submissionSchema = mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
-    problemId:{
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "Problem",
-        required:true
+    problemId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Problem",
+      required: true,
     },
-    code:{
-        type:String,
-        required:true
+    code: {
+      type: String,
+      required: true,
     },
-    language:{
-        type:String,
-        required:true,
-        enum:["cpp", "java", "python"]
+    language: {
+      type: String,
+      required: true,
+      enum: ["cpp", "java", "python"],
     },
-    verdict:{
-        type:String,
-        enum:["Pending", "Accepted" , "Rejected" , "Time Limit Exceeded", "Runtime Error" , "Compilation Error"],
-        default:"Pending"
-    }
-},
-{
-    timestamps:true
-});
+    verdict: {
+      type: String,
+      enum: [
+        "Pending",
+        "ACCEPTED",
+        "WRONG_ANSWER",
+        "TIME_LIMIT_EXCEEDED",
+        "RUNTIME_ERROR",
+        "COMPILATION_ERROR",
+      ],
+      default: "Pending",
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
 
 module.exports = mongoose.model("Submission" , submissionSchema);
