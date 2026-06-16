@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import api from "../services/api";
-import Dashboad from "./Dashboard";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
@@ -23,12 +22,9 @@ export default function Login() {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            // console.log("start");
             const res = await api.post('/auth/login', formData);
 
             console.log(res);
-
-            // console.log("end");
 
             await fetchUser();
             navigate('/dashboard');
@@ -38,27 +34,48 @@ export default function Login() {
         }
     }
     return (
-        <>
-            <div>
-                <h1>Registration Form</h1>
+        <div className="auth-wrapper">
+            <div className="auth-card">
+                <div className="auth-header">
+                    <h1>Welcome Back</h1>
+                    <p>Sign in to your account</p>
+                </div>
 
-                <form onSubmit={handleSubmit}>
-                    <input type="email"
-                        name="email"
-                        value={formData.email}
-                        placeholder="Email"
-                        onChange={handleChange}
-                    />
-                    <input type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={formData.password}
-                        onChange={handleChange}
-                    />
+                <form className="auth-form" onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label className="form-label" htmlFor="email">Email Address</label>
+                        <input 
+                            id="email"
+                            type="email"
+                            name="email"
+                            className="form-input"
+                            value={formData.email}
+                            placeholder="Enter your email"
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label className="form-label" htmlFor="password">Password</label>
+                        <input 
+                            id="password"
+                            type="password"
+                            name="password"
+                            className="form-input"
+                            placeholder="Enter your password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
 
-                    <button type="submit">Submit</button>
+                    <button className="btn-submit" type="submit">Sign In</button>
                 </form>
+
+                <div className="auth-footer">
+                    Don't have an account? <Link to="/register">Create Account</Link>
+                </div>
             </div>
-        </>
+        </div>
     )
 }

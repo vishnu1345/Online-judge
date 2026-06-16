@@ -13,7 +13,7 @@ export function AuthProvider({ children }) {
             const user = await api.get('/auth/me');
 
             setuser(user.data);
-        } catch (error) {
+        } catch {
             setuser(null);
         } finally {
             setLoading(false);
@@ -22,6 +22,7 @@ export function AuthProvider({ children }) {
     };
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         fetchUser();
     }, []);
 
@@ -39,4 +40,5 @@ export function AuthProvider({ children }) {
     )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);

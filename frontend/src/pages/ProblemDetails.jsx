@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import api from "../services/api";
 
 export default function ProblemDetails() {
@@ -23,37 +23,54 @@ export default function ProblemDetails() {
     fetchProblem();
   }, [id]);
 
-  if (!problem) return <h2>Loading...</h2>;
+  if (!problem) {
+    return (
+      <div className="page-container">
+        <h2>Loading...</h2>
+      </div>
+    );
+  }
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>{problem.title}</h1>
-
-      <h3>Difficulty: {problem.difficulty}</h3>
-
-      <h2>Statement</h2>
-      <pre>{problem.statement}</pre>
-
-      <h2>Test Cases</h2>
-
-      {testcase?.cases?.map((tc, index) => (
-        <div
-          key={index}
-          style={{
-            border: "1px solid gray",
-            marginBottom: "15px",
-            padding: "10px",
-          }}
-        >
-          <h4>Example {index + 1}</h4>
-
-          <strong>Input:</strong>
-          <pre>{tc.input}</pre>
-
-          <strong>Output:</strong>
-          <pre>{tc.output}</pre>
+    <div className="page-container">
+      <Link to="/problems" className="back-link">
+        &larr; Back to Problems
+      </Link>
+      
+      <div className="problem-details-card">
+        <div className="detail-header">
+          <div className="detail-header-left">
+            <h1>{problem.title}</h1>
+          </div>
+          <span className={`difficulty-badge ${problem.difficulty?.toLowerCase() || 'easy'}`}>
+            {problem.difficulty || 'Easy'}
+          </span>
         </div>
-      ))}
+
+        <h2 className="detail-section-title">Statement</h2>
+        <div className="statement-text">{problem.statement}</div>
+
+        <h2 className="detail-section-title">Test Cases</h2>
+        <div className="testcases-container">
+          {testcase?.cases?.map((tc, index) => (
+            <div key={index} className="testcase-card">
+              <h4>Example {index + 1}</h4>
+              
+              <div className="testcase-io-group">
+                <div className="io-box">
+                  <span className="io-label">Input:</span>
+                  <pre className="code-block">{tc.input}</pre>
+                </div>
+
+                <div className="io-box">
+                  <span className="io-label">Output:</span>
+                  <pre className="code-block">{tc.output}</pre>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

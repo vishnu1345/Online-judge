@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../services/api";
 import { useNavigate } from "react-router-dom";
 
@@ -19,18 +19,30 @@ export default function Problems(){
 
         fetchProblems();
     } , []);
-    return(
-        <>
-            <h1>Problems</h1>
+    return (
+        <div className="page-container">
+            <div className="problems-header">
+                <h1>Coding Challenges</h1>
+                <p>Browse through the problems and test your coding skills</p>
+            </div>
 
-            {problems.map((problem)=>(
-                <div key={problem._id}
-                    onClick={()=> navigate(`/problems/${problem._id}`)}
-                >
-                    <h2>{problem.title}</h2>
-                    <p>{problem.difficulty}</p>
-                </div>
-            ))}
-        </>
+            <div className="problems-list">
+                {problems.map((problem) => (
+                    <div 
+                        key={problem._id}
+                        className="problem-card"
+                        onClick={() => navigate(`/problems/${problem._id}`)}
+                    >
+                        <div className="problem-info">
+                            <h3>{problem.title}</h3>
+                            <p>Challenge your logical thinking</p>
+                        </div>
+                        <span className={`difficulty-badge ${problem.difficulty?.toLowerCase() || 'easy'}`}>
+                            {problem.difficulty || 'Easy'}
+                        </span>
+                    </div>
+                ))}
+            </div>
+        </div>
     )
 }

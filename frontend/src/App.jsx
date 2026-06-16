@@ -1,4 +1,3 @@
-import React from "react";
 import Register from "./pages/Register";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
@@ -7,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import { AuthProvider } from "./context/AuthContext";
 import Problems from "./pages/Problems";
 import ProblemDetails from "./pages/ProblemDetails";
+import Navbar from "./components/Navbar";
 
 
 export default function App() {
@@ -15,6 +15,7 @@ export default function App() {
     <>
       <AuthProvider>
         <BrowserRouter>
+          <Navbar />
           <Routes>
             <Route path='/' element={<Login />} />
             <Route path='/register' element={<Register />} />
