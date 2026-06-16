@@ -638,4 +638,46 @@ body {
   color: #fca5a5;
 }
 
+/* Submissions List styles */
+.submissions-section {
+  margin-top: 28px;
+}
+
+.submission-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius-sm);
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.submission-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.submission-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.verdict-text {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.verdict-text.accepted {
+  color: var(--easy-color);
+}
+
+.verdict-text:not(.accepted) {
+  color: var(--hard-color);
+}
+
+
 

@@ -22,6 +22,16 @@ return 0;
   const [errorDetail, setErrorDetail] = useState(null);
   const [expectedOutput, setExpectedOutput] = useState(null);
   const [receivedOutput, setReceivedOutput] = useState(null);
+  const [submissions, setSubmissions] = useState([]);
+
+  const fetchSubmissions = async () => {
+    try {
+      const res = await api.get("/submissions");
+      setSubmissions(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -45,6 +55,7 @@ return 0;
       if (res.data.received !== undefined) {
         setReceivedOutput(res.data.received);
       }
+      await fetchSubmissions();
 
     } catch (error) {
       console.log(error);
@@ -68,6 +79,8 @@ return 0;
     };
 
     fetchProblem();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchSubmissions();
   }, [id]);
 
   if (!problem) {
@@ -118,6 +131,32 @@ return 0;
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="submissions-section">
+            <h2 className="detail-section-title">My Recent Submissions</h2>
+            {submissions.filter((sub) => (sub.problemId?._id || sub.problemId) === id).length === 0 ? (
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>No submissions yet.</p>
+            ) : (
+              submissions
+                .filter((sub) => (sub.problemId?._id || sub.problemId) === id)
+                .slice(0, 10)
+                .map((sub) => (
+                  <div key={sub._id} className="submission-item">
+                    <div className="submission-meta">
+                      <span className={`verdict-text ${sub.verdict.toLowerCase().replace('_', '-').replace(' ', '-')}`}>
+                        {sub.verdict}
+                      </span>
+                      <span className="submission-date">
+                        {new Date(sub.createdAt).toLocaleString()}
+                      </span>
+                    </div>
+                    <span className="language-badge" style={{ textTransform: 'uppercase' }}>
+                      {sub.language}
+                    </span>
+                  </div>
+                ))
+            )}
           </div>
         </div>
 

@@ -1,11 +1,10 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import api from "../services/api";
 
 export default function Navbar() {
   const { user, setuser } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const handleLogout = async () => {
     try {
@@ -25,18 +24,18 @@ export default function Navbar() {
         Online Judge
       </Link>
       <div className="navbar-menu">
-        <Link
+        {/* <Link
           to="/dashboard"
           className={`nav-link ${location.pathname === "/dashboard" ? "active" : ""}`}
         >
           Dashboard
-        </Link>
-        <Link
+        </Link> */}
+        {/* <Link
           to="/problems"
           className={`nav-link ${location.pathname.startsWith("/problems") ? "active" : ""}`}
         >
           Problems
-        </Link>
+        </Link> */}
       </div>
       <div className="navbar-actions">
         <span className="user-badge">Hello, {user.name}</span>
