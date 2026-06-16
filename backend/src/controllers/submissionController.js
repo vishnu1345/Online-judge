@@ -37,6 +37,9 @@ const submitCode = async (req, res) => {
         return res.json({
             submissionId : submission._id,
             verdict : submission.verdict,
+            error: result.error,
+            expected: result.expected,
+            received: result.received
         })
 
     } catch (error) {
