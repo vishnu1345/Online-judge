@@ -1,32 +1,32 @@
 const Problem = require("../models/Problem");
 const TestCase = require("../models/Testcase");
 
-const getProblemDetails = async (req , res)=>{
+const getProblemDetails = async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
 
         const problem = await Problem.findById(id);
 
-        if(!problem){
-            res.status(404).json({
-                success : false,
-                message : "Problem not found"
+        if (!problem) {
+            return res.status(404).json({
+                success: false,
+                message: "Problem not found"
             })
         }
         // console.log("problemId" , id);
         const testcase = await TestCase.findOne({
-            problemId : id
+            problemId: id
         })
         // console.log(testcases);
         res.status(200).json({
-            success : true,
+            success: true,
             problem,
             testcase
         })
     } catch (error) {
         res.status(500).json({
-            success : true,
-            message : error.message
+            success: false,
+            message: error.message
         })
     }
 }

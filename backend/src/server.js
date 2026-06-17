@@ -11,7 +11,7 @@ const submissionRoutes = require('./routes/submissionRoutes');
 
 const app = express();
 
-connectDB();
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -29,5 +29,6 @@ app.get("/", (req, res) => {
 });
 
 app.listen(process.env.PORT, () => {
+  connectDB();
   console.log("server running");
 });
